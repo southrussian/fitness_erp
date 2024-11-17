@@ -79,7 +79,6 @@ class Class(db.Model):
     schedule = db.relationship('Schedule', foreign_keys=[schedule_id], backref='class_info')
 
 
-
 class Schedule(db.Model):
     __tablename__ = 'schedule'
     schedule_id = db.Column(db.Integer, primary_key=True)

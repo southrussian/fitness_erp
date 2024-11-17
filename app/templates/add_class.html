@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Class</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f8f7;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .navbar {
+            background: linear-gradient(145deg, #f7f7f7, #e1e1e1);
+            padding: 15px 30px;
+            color: #333;
+            font-size: 24px;
+            font-weight: 500;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .form-container input, .form-container select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0071e3;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #0061c2;
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f1f1f1;
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        Add Class
+    </div>
+
+    <div class="container">
+        <div class="form-container">
+            <form method="post">
+                <input type="text" name="name" placeholder="Name" required>
+                <textarea name="description" placeholder="Description"></textarea>
+                <select name="employee_id" required>
+                    <option value="" disabled selected>Select Employee</option>
+                    {% for employee in employees %}
+                    <option value="{{ employee.employee_id }}">{{ employee.first_name }} {{ employee.last_name }}</option>
+                    {% endfor %}
+                </select>
+                <select name="schedule_id">
+                    <option value="" disabled selected>Select Schedule</option>
+                    {% for schedule in schedules %}
+                    <option value="{{ schedule.schedule_id }}">{{ schedule.date }} {{ schedule.start_time }} - {{ schedule.end_time }}</option>
+                    {% endfor %}
+                </select>
+                <input type="number" name="duration" placeholder="Duration" required>
+                <input type="number" name="max_participants" placeholder="Max Participants" required>
+                <button type="submit">Add Class</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Fitness Club</p>
+    </div>
+</body>
+</html>

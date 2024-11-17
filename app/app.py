@@ -1,6 +1,15 @@
 from flask import Flask, render_template, redirect, url_for, flash, request, session
-from flask_sqlalchemy import SQLAlchemy
 from models import *
+
+from user import register, login, logout
+from memberships import view_memberships, add_membership, edit_membership, delete_membership
+from clients import view_clients, add_client, edit_client, delete_client
+from employees import view_employees, add_employees, edit_employees, delete_employees
+from classes import view_classes, add_class, edit_class, delete_class
+from schedule import view_schedules, add_schedule, edit_schedule, delete_schedule
+from payments import view_payments, add_payment, edit_payment, delete_payment
+from client_inventory_usages import (view_client_inventory_usage, add_client_inventory_usage,
+                                     edit_client_inventory_usage, delete_client_inventory_usage)
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///fitness_club.db'
@@ -9,71 +18,46 @@ app.secret_key = 'oxxxymiron'
 
 db.init_app(app)
 
+register(app)
+login(app)
+logout(app)
 
-@app.route("/register", methods=["GET", "POST"])
-def register():
-    if request.method == "POST":
-        username = request.form['username']
-        email = request.form['email']
-        password = request.form['password']
+view_memberships(app)
+add_membership(app)
+edit_membership(app)
+delete_membership(app)
 
-        user = User.query.filter_by(username=username).first()
-        if user:
-            flash('Пользователь с таким именем уже существует!', 'danger')
-            return redirect(url_for('register'))
+view_clients(app)
+add_client(app)
+edit_client(app)
+delete_client(app)
 
-        email_user = User.query.filter_by(email=email).first()
-        if email_user:
-            flash('Пользователь с таким email уже существует!', 'danger')
-            return redirect(url_for('register'))
+view_employees(app)
+add_employees(app)
+edit_employees(app)
+delete_employees(app)
 
-        # Создание нового пользователя
-        new_user = User(username=username, email=email)
-        new_user.set_password(password)
+view_classes(app)
+add_class(app)
+edit_class(app)
+delete_class(app)
 
-        try:
-            db.session.add(new_user)
-            db.session.commit()
-            flash('Ваш аккаунт был успешно создан! Теперь вы можете войти.', 'success')
-            return redirect(url_for('login'))
-        except Exception as e:
-            db.session.rollback()
-            flash('Ошибка при регистрации. Попробуйте снова.', 'danger')
-            return redirect(url_for('register'))
+view_schedules(app)
+add_schedule(app)
+edit_schedule(app)
+delete_schedule(app)
 
-    return render_template("register.html")
+view_payments(app)
+add_payment(app)
+edit_payment(app)
+delete_payment(app)
 
-
-# Маршрут для входа
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        username = request.form['username']
-        password = request.form['password']
-
-        # Поиск пользователя по имени
-        user = User.query.filter_by(username=username).first()
-
-        if user and user.check_password(password):
-            session['user_id'] = user.user_id  # Сохраняем идентификатор пользователя в сессии
-            flash('Вы успешно вошли в систему!', 'success')
-            return redirect(url_for('dashboard'))  # Например, на главную страницу
-        else:
-            flash('Неверное имя пользователя или пароль!', 'danger')
-            return redirect(url_for('login'))
-
-    return render_template("login.html")
+view_client_inventory_usage(app)
+add_client_inventory_usage(app)
+edit_client_inventory_usage(app)
+delete_client_inventory_usage(app)
 
 
-# Маршрут для выхода
-@app.route("/logout")
-def logout():
-    session.pop('user_id', None)  # Удаление пользователя из сессии
-    flash('Вы вышли из системы!', 'info')
-    return redirect(url_for('login'))
-
-
-# Маршрут для панели пользователя (например, главная страница)
 @app.route("/")
 def dashboard():
     if 'user_id' not in session:
