@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Attendance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f5f5f7;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .header a {
+            text-decoration: none;
+            color: #007aff;
+            font-weight: bold;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px;
+            background-color: #007aff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005bb5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Edit Attendance</h1>
+            <a href="{{ url_for('view_attendance') }}"><i class="fas fa-arrow-left"></i> Back to View Attendance</a>
+        </div>
+        <form action="{{ url_for('edit_attendance', attendance_id=attendance.id) }}" method="POST">
+            <label for="client_id">Client</label>
+            <select name="client_id" id="client_id" required>
+                {% for client in clients %}
+                <option value="{{ client.id }}" {% if client.id == attendance.client_id %}selected{% endif %}>{{ client.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="class_id">Class</label>
+            <select name="class_id" id="class_id" required>
+                {% for class in classes %}
+                <option value="{{ class.id }}" {% if class.id == attendance.class_id %}selected{% endif %}>{{ class.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="date">Date</label>
+            <input type="date" name="date" id="date" value="{{ attendance.date }}" required>
+
+            <label for="check_in_time">Check In Time</label>
+            <input type="time" name="check_in_time" id="check_in_time" value="{{ attendance.check_in_time }}" required>
+
+            <label for="check_out_time">Check Out Time</label>
+            <input type="time" name="check_out_time" id="check_out_time" value="{{ attendance.check_out_time }}" required>
+
+            <button type="submit">Update Attendance</button>
+        </form>
+    </div>
+</body>
+</html>

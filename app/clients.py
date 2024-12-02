@@ -25,9 +25,9 @@ def add_client(app):
             date_of_birth = request.form['date_of_birth']
             phone_number = request.form['phone_number']
             email = request.form['email']
+            city = request.form['city']
             address = request.form['address']
             membership_id = request.form['membership_id']
-            status = request.form['status']
 
             new_client = Client(
                 first_name=first_name,
@@ -35,10 +35,10 @@ def add_client(app):
                 middle_name=middle_name,
                 date_of_birth=date_of_birth,
                 phone_number=phone_number,
+                city=city,
                 email=email,
                 address=address,
                 membership_id=membership_id,
-                status=status
             )
 
             try:
@@ -69,9 +69,9 @@ def edit_client(app):
             client.date_of_birth = request.form['date_of_birth']
             client.phone_number = request.form['phone_number']
             client.email = request.form['email']
+            client.city = request.form['city']
             client.address = request.form['address']
             client.membership_id = request.form['membership_id']
-            client.status = request.form['status']
 
             try:
                 db.session.commit()

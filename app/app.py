@@ -10,6 +10,9 @@ from schedule import view_schedules, add_schedule, edit_schedule, delete_schedul
 from payments import view_payments, add_payment, edit_payment, delete_payment
 from client_inventory_usages import (view_client_inventory_usage, add_client_inventory_usage,
                                      edit_client_inventory_usage, delete_client_inventory_usage)
+from inventories import view_inventory, add_inventory, edit_inventory, delete_inventory
+from attendances import view_attendance, add_attendance, edit_attendance, delete_attendance
+from rooms import view_rooms, add_room, edit_room, delete_room
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///fitness_club.db'
@@ -56,6 +59,21 @@ view_client_inventory_usage(app)
 add_client_inventory_usage(app)
 edit_client_inventory_usage(app)
 delete_client_inventory_usage(app)
+
+view_inventory(app)
+add_inventory(app)
+edit_inventory(app)
+delete_inventory(app)
+
+view_attendance(app)
+add_attendance(app)
+edit_attendance(app)
+delete_attendance(app)
+
+view_rooms(app)
+add_room(app)
+edit_room(app)
+delete_room(app)
 
 
 @app.route("/")

@@ -22,7 +22,6 @@ def add_class(app):
             name = request.form['name']
             description = request.form['description']
             employee_id = request.form['employee_id']
-            schedule_id = request.form['schedule_id']
             duration = request.form['duration']
             max_participants = request.form['max_participants']
 
@@ -30,7 +29,6 @@ def add_class(app):
                 name=name,
                 description=description,
                 employee_id=employee_id,
-                schedule_id=schedule_id,
                 duration=duration,
                 max_participants=max_participants
             )
@@ -46,8 +44,7 @@ def add_class(app):
                 return redirect(url_for('add_class'))
 
         employees = Employee.query.all()
-        schedules = Schedule.query.all()
-        return render_template("add_class.html", employees=employees, schedules=schedules)
+        return render_template("add_class.html", employees=employees)
 
 
 def edit_class(app):
@@ -62,7 +59,6 @@ def edit_class(app):
             class_info.name = request.form['name']
             class_info.description = request.form['description']
             class_info.employee_id = request.form['employee_id']
-            class_info.schedule_id = request.form['schedule_id']
             class_info.duration = request.form['duration']
             class_info.max_participants = request.form['max_participants']
 
@@ -76,8 +72,7 @@ def edit_class(app):
                 return redirect(url_for('edit_class', class_id=class_id))
 
         employees = Employee.query.all()
-        schedules = Schedule.query.all()
-        return render_template("edit_class.html", class_info=class_info, employees=employees, schedules=schedules)
+        return render_template("edit_class.html", class_info=class_info, employees=employees)
 
 
 def delete_class(app):

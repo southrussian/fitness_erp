@@ -19,7 +19,6 @@ def register(app):
                 flash('Пользователь с таким email уже существует!', 'danger')
                 return redirect(url_for('register'))
 
-            # Создание нового пользователя
             new_user = User(username=username, email=email)
             new_user.set_password(password)
 

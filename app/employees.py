@@ -26,8 +26,6 @@ def add_employees(app):
             position = request.form['position']
             phone_number = request.form['phone_number']
             email = request.form['email']
-            salary = request.form['salary']
-            status = request.form['status']
 
             new_employee = Employee(
                 user_id=user_id,
@@ -36,9 +34,7 @@ def add_employees(app):
                 middle_name=middle_name,
                 position=position,
                 phone_number=phone_number,
-                email=email,
-                salary=salary,
-                status=status
+                email=email
             )
 
             try:
@@ -64,15 +60,13 @@ def edit_employees(app):
         employee = Employee.query.get_or_404(employee_id)
 
         if request.method == "POST":
-            employee.user_id = request.form['user_id']
+            # employee.user_id = request.form['user_id']
             employee.first_name = request.form['first_name']
             employee.last_name = request.form['last_name']
             employee.middle_name = request.form['middle_name']
             employee.position = request.form['position']
             employee.phone_number = request.form['phone_number']
             employee.email = request.form['email']
-            employee.salary = request.form['salary']
-            employee.status = request.form['status']
 
             try:
                 db.session.commit()

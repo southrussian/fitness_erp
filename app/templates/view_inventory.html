@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Клиенты</title>
+    <title>Инвентарь</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
@@ -76,28 +76,26 @@
 </head>
 <body>
     <div class="container">
-        <h1>Memberships</h1>
+        <h1>Инвентарь</h1>
         <div class="btn-container">
-            <a href="{{ url_for('add_membership') }}" class="btn btn-primary">Добавить новый абонемент</a>
+            <a href="{{ url_for('add_inventory') }}" class="btn btn-primary">Добавить инвентарь</a>
             <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Назад на главный экран</a>
         </div>
         <table>
         <tr>
-            <th>Type</th>
-            <th>Price</th>
-            <th>Duration</th>
-            <th>Access Level</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Status</th>
             <th>Actions</th>
         </tr>
-        {% for membership in memberships %}
+        {% for inventory in inventories %}
         <tr>
-            <td>{{ membership.type }}</td>
-            <td>{{ membership.price }}</td>
-            <td>{{ membership.duration }}</td>
-            <td>{{ membership.access_level }}</td>
+            <td>{{ inventory.name }}</td>
+            <td>{{ inventory.quantity }}</td>
+            <td>{{ inventory.status }}</td>
             <td>
-                <a href="{{ url_for('edit_membership', membership_id=membership.membership_id) }}">Edit</a>
-                <form action="{{ url_for('delete_membership', membership_id=membership.membership_id) }}" method="post" style="display:inline;">
+                <a href="{{ url_for('edit_inventory', inventory_id=inventory.inventory_id) }}">Edit</a>
+                <form action="{{ url_for('delete_inventory', inventory_id=inventory.inventory_id) }}" method="post" style="display:inline;">
                     <button type="submit">Delete</button>
                 </form>
             </td>
@@ -107,3 +105,4 @@
     </div>
 </body>
 </html>
+

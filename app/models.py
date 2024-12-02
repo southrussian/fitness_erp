@@ -28,10 +28,11 @@ class Client(db.Model):
     date_of_birth = db.Column(db.Date, nullable=False)
     phone_number = db.Column(db.String(15), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
+    city = db.Column(db.String(200), nullable=True)
     address = db.Column(db.String(200), nullable=True)
     membership_id = db.Column(db.Integer, db.ForeignKey('memberships.membership_id'), nullable=True)
     registration_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    status = db.Column(db.String(20), nullable=False)
+    # status = db.Column(db.String(20), nullable=False)
 
     membership = db.relationship('Membership', backref='clients')
     attendances = db.relationship('Attendance', backref='client')
@@ -58,8 +59,6 @@ class Employee(db.Model):
     position = db.Column(db.String(50), nullable=False)
     phone_number = db.Column(db.String(15), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
-    salary = db.Column(db.Float, nullable=False)
-    status = db.Column(db.String(20), nullable=False)
 
     user = db.relationship('User', backref='employee', uselist=False)
     classes = db.relationship('Class', backref='employee')
@@ -71,12 +70,12 @@ class Class(db.Model):
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=True)
     employee_id = db.Column(db.Integer, db.ForeignKey('employees.employee_id'), nullable=False)
-    schedule_id = db.Column(db.Integer, db.ForeignKey('schedule.schedule_id'), nullable=True)
+    # schedule_id = db.Column(db.Integer, db.ForeignKey('schedule.schedule_id'), nullable=True)
     duration = db.Column(db.Integer, nullable=False)
     max_participants = db.Column(db.Integer, nullable=False)
 
     attendances = db.relationship('Attendance', backref='class_info')
-    schedule = db.relationship('Schedule', foreign_keys=[schedule_id], backref='class_info')
+    # schedule = db.relationship('Schedule', foreign_keys=[schedule_id], backref='class_info')
 
 
 class Schedule(db.Model):
@@ -89,6 +88,7 @@ class Schedule(db.Model):
     room_id = db.Column(db.Integer, db.ForeignKey('rooms.room_id'), nullable=False)
 
     room = db.relationship('Room', backref='schedules')
+    _class = db.relationship('Class', backref='classes')
 
 
 class Payment(db.Model):
@@ -108,7 +108,6 @@ class Inventory(db.Model):
     inventory_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
-    location = db.Column(db.String(100), nullable=False)
     status = db.Column(db.String(20), nullable=False)
 
     usages = db.relationship('ClientInventoryUsage', backref='inventory')
